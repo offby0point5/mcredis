@@ -1,0 +1,4 @@
+name: Mcredis
+version: @version@
+main: com.github.offby0point5.mcredis.McredisSpigot
+api-version: 1.17
