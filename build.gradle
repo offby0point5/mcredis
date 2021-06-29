@@ -18,8 +18,8 @@ subprojects {
     group = project.group
     version = project.version
 
-    sourceCompatibility = '1.8'
-    targetCompatibility = '1.8'
+    sourceCompatibility = "1.9"
+    targetCompatibility = "1.9"
 
     repositories {
         mavenCentral()
