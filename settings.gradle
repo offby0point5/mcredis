@@ -1,3 +1,6 @@
 rootProject.name = 'mcredis'
 
 include 'mcredis-common', 'mcredis-spigot', 'mcredis-bungeecord', 'mcredis-velocity', 'mcredis-minestom'
+include 'mcredis-backend'
+include 'mcredis-proxy'
+

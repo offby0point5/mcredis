@@ -21,14 +21,15 @@ repositories {
 }
 
 dependencies {
-    compile project(':mcredis-common')
+    compile project(':mcredis-proxy')
     compileOnly 'com.velocitypowered:velocity-api:3.0.0-SNAPSHOT'
     annotationProcessor 'com.velocitypowered:velocity-api:3.0.0-SNAPSHOT'
 }
 
 shadowJar {
     dependencies {
-        include(dependency(':mcredis-common'))
+        // include(dependency(':mcredis-proxy'))
+        exclude(dependency('com.velocitypowered:velocity-api'))
     }
 }
 

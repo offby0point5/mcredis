@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    compile project(':mcredis-common')
+    compile project(':mcredis-proxy')
     compileOnly 'net.md-5:bungeecord-api:1.17-R0.1-SNAPSHOT'
 }
 
@@ -20,7 +20,8 @@ processResources {
 
 shadowJar {
     dependencies {
-        include(dependency(':mcredis-common'))
+        // include(dependency(':mcredis-proxy'))
+        exclude(dependency('net.md-5:bungeecord-api'))
     }
 }
 

@@ -1,8 +1,8 @@
 package com.github.offby0point5.mcredis.backend;
 
-import com.github.offby0point5.mcredis.datatype.ItemStack;
 import com.github.offby0point5.mcredis.Group;
 import com.github.offby0point5.mcredis.Server;
+import com.github.offby0point5.mcredis.datatype.ItemStack;
 import com.github.offby0point5.mcredis.rules.JoinRules;
 import com.github.offby0point5.mcredis.rules.KickRules;
 

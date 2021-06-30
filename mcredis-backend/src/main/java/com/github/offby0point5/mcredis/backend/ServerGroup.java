@@ -1,9 +1,7 @@
-package com.github.offby0point5.mcredis.proxy;
+package com.github.offby0point5.mcredis.backend;
 
-import com.github.offby0point5.mcredis.datatype.ItemStack;
 import com.github.offby0point5.mcredis.Group;
-import com.github.offby0point5.mcredis.rules.JoinRules;
-import com.github.offby0point5.mcredis.rules.KickRules;
+import com.github.offby0point5.mcredis.datatype.ItemStack;
 
 import java.util.Set;
 
@@ -16,8 +14,6 @@ public class ServerGroup {
 
     protected final String groupName;
     protected ItemStack item;
-    protected JoinRules joinRule;
-    protected KickRules kickRule;
     protected Set<String> memberServers;
 
     public ServerGroup(String groupName) {
@@ -39,24 +35,12 @@ public class ServerGroup {
         return memberServers;
     }
 
-    public JoinRules getJoinRule() {
-        update();
-        return joinRule;
-    }
-
-    public KickRules getKickRule() {
-        update();
-        return kickRule;
-    }
-
     public void update() {
         final long timestamp = System.currentTimeMillis();
         if (timestamp - lastUpdate < 2000) return;  // do not update faster than every 2 seconds
         lastUpdate = timestamp;
 
         this.item = this.currentData.getItem();
-        this.joinRule = this.currentData.getJoinRule();
-        this.kickRule = this.currentData.getKickRule();
         this.memberServers = this.currentData.getMembers();
     }
 }

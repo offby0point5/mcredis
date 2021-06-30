@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    compile project(':mcredis-common')
+    compile project(':mcredis-backend')
     implementation 'com.github.Minestom:Minestom:fbb8c1a819'
 }
 
@@ -30,7 +30,8 @@ processResources {
 
 shadowJar {
     dependencies {
-        include(dependency(':mcredis-common'))
+        // include(dependency(':mcredis-backend'))
+        exclude(dependency('com.github.Minestom:Minestom'))
     }
 }
 

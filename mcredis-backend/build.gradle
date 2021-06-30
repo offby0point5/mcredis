@@ -4,18 +4,15 @@ plugins {
 
 repositories {
     maven {
-        name = 'spigotmc-repo'
-        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-    }
-    maven {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
 }
 
 dependencies {
-    compile project(':mcredis-backend')
-    compileOnly 'org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT'
+    compile project(':mcredis-common')
+    implementation 'com.electronwill.night-config:core:3.6.3'
+    implementation 'com.electronwill.night-config:toml:3.6.3'
 }
 
 processResources {
@@ -25,10 +22,7 @@ processResources {
 }
 
 shadowJar {
-    dependencies {
-        // include(dependency(':mcredis-backend'))
-        exclude(dependency('org.spigotmc:spigot-api'))
-    }
+    dependencies {}
 }
 
 tasks.build.dependsOn tasks.shadowJar
