@@ -1,0 +1,14 @@
+[server]
+main = "lobby"
+groups = ["lobby", "random"]
+
+[group]
+join = "LEAST"
+kick = "LOBBY"
+
+[group.item]
+name = "Lobby"
+material = "BIRCH_SAPLING"
+amount = 1
+glowing = false
+lore = ["Using standard config"]

@@ -54,6 +54,7 @@ public class McredisVelocity {
 
     @Subscribe
     public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
+        // TODO: 30.06.21 handle case in which no servers are available
         String serverName = Manager.getJoinServer(event.getPlayer().getUniqueId(), "lobby");
         Optional<RegisteredServer> optionalRegisteredServer = proxy.getServer(serverName);
         if (optionalRegisteredServer.isEmpty()) {

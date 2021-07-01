@@ -61,7 +61,7 @@ public class Configuration {
      * Loads and validates the config file
      */
     public static void reload() {
-        URL defaultConfigLocation = Configuration.class.getClassLoader().getResource("minecraft-redis.toml");
+        URL defaultConfigLocation = Configuration.class.getClassLoader().getResource("mcredis.toml");
         if (defaultConfigLocation == null) {
             throw new RuntimeException("Default configuration file does not exist.");
         }
