@@ -20,7 +20,9 @@ processResources {
 }
 
 shadowJar {
-    dependencies {}
+    dependencies {
+        include(dependency(":mcredis-common"))
+    }
 }
 
 tasks.build.dependsOn tasks.shadowJar

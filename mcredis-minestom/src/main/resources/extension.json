@@ -5,8 +5,16 @@
   "dependencies": [],
   "externalDependencies": {
     "repositories": [
-      {"name": "Central", "url": "https://repo1.maven.org/maven2/"}
+      {"name": "sonatype", "url": "https://oss.sonatype.org/content/groups/public"},
+      {"name": "velocitypowered-repo", "url": "https://repo.velocitypowered.com/snapshots"},
+      {"name": "minecraft-libraries", "url": "https://libraries.minecraft.net"},
+      {"name": "jitpack", "url": "https://jitpack.io"}
     ],
-    "artifacts": []
+    "artifacts": [
+      "com.electronwill.night-config:core:3.6.3",
+      "com.electronwill.night-config:toml:3.6.3",
+      "com.google.code.gson:gson:2.8.7",
+      "redis.clients:jedis:3.6.1"
+    ]
   }
 }

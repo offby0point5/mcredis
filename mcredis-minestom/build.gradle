@@ -30,8 +30,7 @@ processResources {
 
 shadowJar {
     dependencies {
-        // include(dependency(':mcredis-backend'))
-        exclude(dependency('com.github.Minestom:Minestom'))
+        include(dependency(':mcredis-backend'))
     }
 }
 
