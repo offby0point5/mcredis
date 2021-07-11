@@ -91,6 +91,7 @@ public class Server {
     }
 
     public void addGroups(String... groupNames) {
+        if (groupNames.length == 0) return;  // prevent exception when adding no groups
         try (Jedis jedis = Network.getJedis()){
             Transaction transaction = jedis.multi();
             transaction.sadd(ALL_GROUPS, groupNames);
@@ -102,7 +103,12 @@ public class Server {
         }
     }
 
+    public void addGroups(Collection<String> groupNames) {
+        addGroups(groupNames.toArray(new String[0]));
+    }
+
     public void remGroups(String... groupNames) {
+        if (groupNames.length == 0) return;  // prevent exception when removing no groups
         try (Jedis jedis = Network.getJedis()){
             Transaction transaction = jedis.multi();
             transaction.srem(ALL_GROUPS, groupNames);

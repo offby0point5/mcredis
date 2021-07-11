@@ -7,6 +7,7 @@ import com.github.offby0point5.mcredis.rules.JoinRules;
 import com.github.offby0point5.mcredis.rules.KickRules;
 
 import java.net.InetSocketAddress;
+import java.util.Set;
 
 /**
  * Represents network as seen by a backend server.
@@ -20,7 +21,7 @@ public class Manager {
                              ItemStack defaultMenuItem,
                              JoinRules defaultJoinRule,
                              KickRules defaultKickRule,
-                             String... allGroups) {
+                             Set<String> allGroups) {
         if (server != null) return;
         server = new SingleServer(serverName);
         server.currentData.setAddress(address);

@@ -29,12 +29,9 @@ public class MinestomRedis extends Extension {
                         .glowing(Configuration.getServerDefaultItemGlowing())
                         .build(),
                 Configuration.getServerDefaultJoin(),
-                Configuration.getServerDefaultKick());
+                Configuration.getServerDefaultKick(),
+                Configuration.getServerGroups());
 
-        Server server = new Server(Configuration.getServerId());
-        for (String group : Configuration.getServerGroups()) {
-            server.addGroups(group);
-        }
         MinecraftServer.LOGGER.info("minecraft-redis started.");
     }
 
