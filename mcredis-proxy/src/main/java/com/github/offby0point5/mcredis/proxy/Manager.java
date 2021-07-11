@@ -29,7 +29,9 @@ public class Manager {
         Group group = new Group(groupName);
         JoinRules joinRule = group.getJoinRule();
         if (joinRule == null) return null;
-        return joinRule.getJoinServer(new Player(playerID), group).getName();
+        Server server = joinRule.getJoinServer(new Player(playerID), group);
+        if (server == null) return null;
+        return server.getName();
     }
 
     public static String getKickGroup(UUID playerID, String serverName) {

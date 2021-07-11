@@ -6,7 +6,9 @@ import com.github.offby0point5.mcredis.rules.JoinRules;
 import com.github.offby0point5.mcredis.rules.KickRules;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -30,12 +32,12 @@ public class Configuration {
     private static File configFile;
     private static final String serverName;
     private static GetInteger getServerPort;
-    private static GetString getServerHost;
 
     static {
         // Server name is a random 8 character string
-        byte[] array = new byte[8]; new Random().nextBytes(array);
-        serverName = new String(array, StandardCharsets.UTF_8);
+        serverName = new Random().ints(97, 123).limit(8)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
 
         configSpec = new ConfigSpec();
         configSpec.defineOfClass(SERVER_MAIN, "lobby", String.class);
@@ -51,9 +53,8 @@ public class Configuration {
         configSpec.defineInRange(SERVER_DEFAULT_ITEM_AMOUNT, 1, 1, 64);
     }
 
-    public static void setup(File configurationFile, GetString serverHost, GetInteger serverPort) {
+    public static void setup(File configurationFile, GetInteger serverPort) {
         configFile = configurationFile;
-        getServerHost = serverHost;
         getServerPort = serverPort;
     }
 
@@ -80,7 +81,6 @@ public class Configuration {
     }
 
     public interface GetInteger { int run();}
-    public interface GetString { String run();}
 
     // ==== OPTION GETTERS ==================================================
     public static String getServerId() {
@@ -92,7 +92,12 @@ public class Configuration {
     }
 
     public static String getServerHost() {
-        return getServerHost.run();
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return InetAddress.getLoopbackAddress().getHostAddress();
+        }
     }
 
     public static String getServerMain() {

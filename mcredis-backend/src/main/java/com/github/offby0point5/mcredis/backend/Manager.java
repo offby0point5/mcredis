@@ -32,6 +32,7 @@ public class Manager {
         if (defaultJoinRule != null) main.defaultJoinRule(defaultJoinRule);
         if (defaultKickRule != null) main.defaultKickRule(defaultKickRule);
         server.currentData.addGroups(allGroups);
+        setStatus(Server.ServerOnlineStatus.ONLINE);
     }
 
     public static void setStatus(Server.ServerOnlineStatus status) {

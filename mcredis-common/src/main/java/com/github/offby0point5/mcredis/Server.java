@@ -140,7 +140,7 @@ public class Server {
             }
             transaction.del(ADDRESS);
             transaction.del(STATUS);
-            transaction.del(MAIN_GROUP);
+            transaction.expire(MAIN_GROUP, 10L);
             transaction.del(ALL_GROUPS);
             for (UUID playerId : getPlayers()) {
                 Player player = new Player(playerId);
@@ -152,6 +152,7 @@ public class Server {
     }
 
     public static boolean canJoin(ServerOnlineStatus status) {
+        if (status == null) return false;
         switch (status) {
             case ONLINE:
             case SOFT_FULL:

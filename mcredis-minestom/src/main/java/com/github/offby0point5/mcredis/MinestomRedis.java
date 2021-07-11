@@ -15,8 +15,7 @@ public class MinestomRedis extends Extension {
     public void initialize() {
         @SuppressWarnings("UnstableApiUsage")
         InetSocketAddress address = MinecraftServer.getNettyServer().getServerChannel().localAddress();
-        Configuration.setup(new File("mc-redis.toml"),
-                address::getHostName, address::getPort);
+        Configuration.setup(new File("mc-redis.toml"), address::getPort);
         Configuration.reload();
 
         Manager.setup(Configuration.getServerId(),

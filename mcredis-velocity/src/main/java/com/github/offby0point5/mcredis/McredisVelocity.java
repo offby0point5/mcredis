@@ -7,6 +7,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.player.KickedFromServerEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
+import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
@@ -77,8 +78,11 @@ public class McredisVelocity {
 
     @Subscribe
     public void onPlayerJoin(PlayerChooseInitialServerEvent event) {
-        // TODO: 30.06.21 handle case in which no servers are available
         String serverName = Manager.getJoinServer(event.getPlayer().getUniqueId(), "lobby");
+        if (serverName == null) {
+            event.setInitialServer(null);
+            return;
+        }
         Optional<RegisteredServer> optionalRegisteredServer = proxy.getServer(serverName);
         if (optionalRegisteredServer.isEmpty()) {
             event.setInitialServer(null);
@@ -126,6 +130,11 @@ public class McredisVelocity {
                 }
         }
         event.setResult(PluginMessageEvent.ForwardResult.handled());
+    }
+
+    @Subscribe
+    public void onServerConnect(ServerPreConnectEvent event) {
+
     }
 
     @Subscribe
