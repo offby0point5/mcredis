@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     compile project(':mcredis-backend')
-    implementation 'com.github.Minestom:Minestom:fbb8c1a819'
+    implementation 'com.github.Minestom:Minestom:b9864a1a28e10acf63894f44b8c1f73fdb459a0b'
 }
 
 processResources {
