@@ -16,11 +16,14 @@ import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.messages.ChannelMessageSink;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import com.velocitypowered.api.proxy.server.ServerInfo;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.slf4j.Logger;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Plugin(
@@ -45,6 +48,26 @@ public class McredisVelocity {
         log.info("Register plugin messaging channels.");
         proxy.getChannelRegistrar().register(MinecraftChannelIdentifier.create(
                 Messaging.NAMESPACE, Messaging.CHANNEL_SEND_PLAYER));
+        log.info("Set up server list updater.");
+        proxy.getScheduler().buildTask(this, () -> {
+            Set<String> onlineServers = Network.getServers();
+
+            for (RegisteredServer server : proxy.getAllServers()) {
+                if (!onlineServers.contains(server.getServerInfo().getName())) {
+                    proxy.unregisterServer(server.getServerInfo());
+                    log.info(String.format("Removed server %s", server.getServerInfo().getName()));
+                }
+            }
+
+            Set<String> knownServers = proxy.getAllServers().stream().map(o -> o.getServerInfo().getName())
+                    .collect(Collectors.toSet());
+            for (String serverName : onlineServers) {
+                if (!knownServers.contains(serverName)) {
+                    proxy.registerServer(new ServerInfo(serverName, new Server(serverName).getAddress()));
+                    log.info(String.format("Added server %s", serverName));
+                }
+            }
+        }).repeat(5, TimeUnit.SECONDS).schedule();
     }
 
     @Subscribe
