@@ -28,7 +28,6 @@ dependencies {
 
 shadowJar {
     dependencies {
-        // include(dependency(':mcredis-proxy'))
         exclude(dependency('com.velocitypowered:velocity-api'))
     }
 }

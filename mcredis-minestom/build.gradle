@@ -30,6 +30,7 @@ processResources {
 
 shadowJar {
     dependencies {
+        // todo remove shaded external dependencies
         include(dependency(':mcredis-backend'))
         include(dependency(':mcredis-common'))
     }

@@ -11,8 +11,8 @@ repositories {
 
 dependencies {
     compile project(':mcredis-common')
-    compileOnly 'com.electronwill.night-config:core:3.6.3'
-    compileOnly 'com.electronwill.night-config:toml:3.6.3'
+    implementation 'com.electronwill.night-config:core:3.6.3'
+    implementation 'com.electronwill.night-config:toml:3.6.3'
 }
 
 processResources {
@@ -22,9 +22,7 @@ processResources {
 }
 
 shadowJar {
-    dependencies {
-        include(dependency(":mcredis-common"))
-    }
+    dependencies {}
 }
 
 tasks.build.dependsOn tasks.shadowJar
