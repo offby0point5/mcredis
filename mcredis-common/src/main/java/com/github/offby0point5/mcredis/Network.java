@@ -4,18 +4,29 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import java.net.InetSocketAddress;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Network {
-    private static final JedisPool JEDIS_POOL = new JedisPool(new JedisPoolConfig(), "localhost");
+    private static final JedisPool JEDIS_POOL;
     public static final String NETWORK_PREFIX = "mcn";
 
+    static {
+        Configuration.reload();
+        if (Configuration.getRedisUser().isBlank() || Configuration.getRedisPass().isBlank()) {
+            JEDIS_POOL = new JedisPool(new JedisPoolConfig(),
+                    Configuration.getRedisHost(), Configuration.getRedisPort());
+        } else {
+            JEDIS_POOL = new JedisPool(new JedisPoolConfig(),
+                    Configuration.getRedisHost(), Configuration.getRedisPort(),
+                    Configuration.getRedisUser(), Configuration.getRedisPass());
+        }
+    }
+
     public static Jedis getJedis() {
-        Jedis jedis = JEDIS_POOL.getResource();
-        // TODO: 20.06.21 authentication
-        return jedis;
+        return JEDIS_POOL.getResource();
     }
 
     public static Set<String> getServers() {
