@@ -7,6 +7,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.player.KickedFromServerEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
+import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
@@ -132,9 +133,14 @@ public class McredisVelocity {
         event.setResult(PluginMessageEvent.ForwardResult.handled());
     }
 
-    @Subscribe
-    public void onServerConnect(ServerPreConnectEvent event) {
-
+    @Subscribe @SuppressWarnings("UnstableApiUsage")
+    public void onServerConnect(ServerPostConnectEvent event) {
+        // set server for player in redis
+        Player player = event.getPlayer();
+        Optional<ServerConnection> serverConnection = player.getCurrentServer();
+        if (serverConnection.isEmpty()) Manager.disconnectPlayer(player.getUniqueId());
+        else Manager.sendPlayer(player.getUniqueId(),
+                serverConnection.get().getServerInfo().getName());
     }
 
     @Subscribe
