@@ -8,7 +8,6 @@ import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.player.KickedFromServerEvent;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
-import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
@@ -37,11 +36,13 @@ import java.util.stream.Collectors;
 public class McredisVelocity {
     private final Logger log;
     private final ProxyServer proxy;
+    private final Set<String> staticServers;
 
     @Inject
     public McredisVelocity(ProxyServer proxyServer, Logger logger) {
         log = logger;
         proxy = proxyServer;
+        staticServers = proxy.getAllServers().stream().map(o -> o.getServerInfo().getName()).collect(Collectors.toSet());
     }
 
     @Subscribe
@@ -55,6 +56,7 @@ public class McredisVelocity {
             Set<String> onlineServers = Network.getServers();
 
             for (RegisteredServer server : proxy.getAllServers()) {
+                if (staticServers.contains(server.getServerInfo().getName())) continue;
                 if (!onlineServers.contains(server.getServerInfo().getName())) {
                     proxy.unregisterServer(server.getServerInfo());
                     log.info(String.format("Removed server %s", server.getServerInfo().getName()));
